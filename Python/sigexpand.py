@@ -12,5 +12,5 @@ def sigexpand(d, m):
     n = len(d)
     out = np.zeros((m, n))
     out[0, :] = d
-    out = out.reshape(1, m*n)
+    out = out.reshape(1, m*n, order='F')
     return out
