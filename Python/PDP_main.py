@@ -1,25 +1,20 @@
 #!/usr/bin/env python
 # encoding: utf-8
-"""
-@author: binshao
-@file: PDP_main.py
-@time: 2018/10/3 10:46 PM
-"""
 
 import numpy as np
 import matplotlib.pyplot as plt
 import csv
-from mgen import generate_prbs
+from mgen import mgen
 from sigexpand import sigexpand
 
-mq = generate_prbs('prbs_9')
+mq = mgen(529, 511, 511)
 mq = np.array(mq)
 N_sample = 2
 Tc = 10e-9
 dt = Tc/N_sample
 gt = np.ones((1, N_sample))
 gt = gt[0]
-st = sigexpand(2*mq[0:510]-1, N_sample)
+st = sigexpand(2*mq[0:511]-1, N_sample)
 # st:array([[]])
 st = st[0]
 # convolve array st and gt
@@ -68,10 +63,11 @@ nse = []
 threshold = []
 for i in range(N):
     pdp_max_array.append(float(np.max(pdp[i*1022:i*1022+1022])))
-    pdp_max_index_array.append(np.argmax(pdp[i*1022:i*1022+1022]))
+    pdp_max_index_array.append(np.argmax(pdp[i*1022:i*1022+1022])+i*1022)
     pdp_array.append(pdp[i*1022:i*1022+1022])
-    nse.append(np.mean(pdp[pdp_max_index_array[i]+500:pdp_max_index_array[i]+900]))
+    nse.append(np.mean(pdp_L[pdp_max_index_array[i]+500:pdp_max_index_array[i]+900]))
     threshold.append(10*np.log10(nse[i])+5)
 
-X = pdp[0:54]
-
+plt.plot(pdp)
+plt.xlim((0, 3000))
+plt.show()

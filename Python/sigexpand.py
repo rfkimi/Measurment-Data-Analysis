@@ -1,10 +1,6 @@
 #!/usr/bin/env python
 # encoding: utf-8
-"""
-@author: binshao
-@file: sigexpand.py
-@time: 2018/9/27 12:38 AM
-"""
+
 import numpy as np
 
 
